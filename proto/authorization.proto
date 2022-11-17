@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "types.proto";
+
+option go_package = "pkg/pb";
+
+message GetRolesRequest {
+    string uid = 1;
+}
+
+message GetRolesResponse {
+    repeated Role roles = 1;
+}
+
+service Authorization {
+  rpc GetRoles(GetRolesRequest) returns (GetRolesResponse) {}
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "pkg/pb";
+
+message LoginRequest {
+}
+
+message LoginResponse {
+}
+
+service Authentication {
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+}
