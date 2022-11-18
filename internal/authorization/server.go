@@ -11,6 +11,6 @@ type Server struct {
 }
 
 func (s *Server) GetRoles(ctx context.Context, in *pb.GetRolesRequest) (*pb.GetRolesResponse, error) {
-	resp := &pb.GetRolesResponse{Roles: []*pb.Role{{Fields: []string{"fall22", "cs200", "uta"}}}}
-	return resp, nil
+	roles := []*pb.Role{{Fields: []string{"fall22", "cs200", "uta"}}}
+	return &pb.GetRolesResponse{Roles: roles}, nil
 }

@@ -1,11 +1,15 @@
 syntax = "proto3";
 
+import "types.proto";
+
 option go_package = "pkg/pb";
 
 message LoginRequest {
+  string email = 1;
 }
 
 message LoginResponse {
+  User user = 1;
 }
 
 service Authentication {
