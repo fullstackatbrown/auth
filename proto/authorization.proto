@@ -1,8 +1,10 @@
 syntax = "proto3";
 
-import "types.proto";
-
 option go_package = "pkg/pb";
+
+message Role {
+    repeated string fields = 1;
+}
 
 message GetRolesRequest {
     string uid = 1;
