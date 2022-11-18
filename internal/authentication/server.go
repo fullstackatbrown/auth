@@ -2,6 +2,7 @@ package authentication
 
 import (
 	"context"
+	"log"
 
 	"github.com/fullstackatbrown/auth-infrastructure/pkg/pb"
 )
@@ -11,6 +12,7 @@ type Server struct {
 }
 
 func (s *Server) Login(ctx context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
+	log.Printf("received Login request for user %v\n", in.Email)
 	user := &pb.User{
 		Id:          "123",
 		DisplayName: "John Doe",
