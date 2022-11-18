@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	log.Printf("starting server on port %v\n", 8000)
 	listener, err := net.Listen("tcp", ":8000")
 	if err != nil {
 		panic(err)
