@@ -11,5 +11,5 @@ type Server struct {
 }
 
 func (s *Server) Login(ctx context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
-	return nil, nil
+	return &pb.LoginResponse{}, nil
 }
