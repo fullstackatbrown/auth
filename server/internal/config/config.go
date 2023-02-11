@@ -3,6 +3,10 @@ package config
 import (
 	"log"
 	"time"
+
+	"github.com/joho/godotenv"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 )
 
 var Config *ServerConfig
@@ -22,11 +26,24 @@ type ServerConfig struct {
 	SessionCookieExpiration time.Duration
 	// Port is the port the server should run on.
 	Port int
-	// FirebaseConfig is the path to the Firebase Admin config JSON.
-	FirebaseConfig string
+	// Google OAuth2 config
+	OAuth2 *oauth2.Config
 }
 
 func DefaultDevelopmentConfig() *ServerConfig {
+	env, err := godotenv.Read()
+	if err != nil {
+		log.Fatalln("Error loading .env file.")
+	}
+
+	oauth := &oauth2.Config{
+		RedirectURL:  "http://localhost:8000/callback",
+		ClientID:     env["GOOGLE_CLIENT_ID"],
+		ClientSecret: env["GOOGLE_CLIENT_SECRET"],
+		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
+		Endpoint:     google.Endpoint,
+	}
+
 	return &ServerConfig{
 		AllowedOrigins:          []string{"http://localhost:3000"},
 		AllowedEmailDomains:     []string{"brown.edu", "gmail.com"},
@@ -34,7 +51,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		SessionCookieName:       "fsab-session",
 		SessionCookieExpiration: time.Hour * 24 * 14,
 		Port:                    8000,
-		FirebaseConfig:          "dev-firebase-config.json",
+		OAuth2:                  oauth,
 	}
 }
 

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
-	rtr "github.com/fullstackatbrown/auth-infrastructure/internal/router"
+	"github.com/fullstackatbrown/auth-infrastructure/internal/handler"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/cors"
@@ -18,9 +18,8 @@ func Routes() *chi.Mux {
 		middleware.Logger,
 	)
 
-	router.Route("/v1", func(r chi.Router) {
-		r.Mount("/users", rtr.AuthRoutes())
-	})
+	router.HandleFunc("/login", handler.GoogleLogin)
+	router.HandleFunc("/callback", handler.GoogleCallback)
 
 	return router
 }
@@ -32,7 +31,7 @@ func Start() {
 
 	router := Routes()
 	c := cors.New(cors.Options{
-		AllowedOrigins:   config.Config.AllowedOrigins,
+		// AllowedOrigins:   config.Config.AllowedOrigins,
 		AllowedHeaders:   []string{"Cookie", "Content-Type"},
 		AllowedMethods:   []string{"GET", "POST", "DELETE", "PATCH"},
 		ExposedHeaders:   []string{"Set-Cookie"},
