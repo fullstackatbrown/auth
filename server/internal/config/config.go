@@ -33,7 +33,7 @@ type ServerConfig struct {
 func DefaultDevelopmentConfig() *ServerConfig {
 	env, err := godotenv.Read()
 	if err != nil {
-		log.Fatalln("Error loading .env file.")
+		log.Panic("Error loading env file.")
 	}
 
 	oauth := &oauth2.Config{
@@ -56,6 +56,5 @@ func DefaultDevelopmentConfig() *ServerConfig {
 }
 
 func init() {
-	log.Println("🙂️ No configuration provided. Using the default configuration.")
 	Config = DefaultDevelopmentConfig()
 }

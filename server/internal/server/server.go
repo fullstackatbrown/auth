@@ -26,7 +26,7 @@ func Routes() *chi.Mux {
 
 func Start() {
 	if config.Config == nil {
-		log.Panic("❌ Missing or invalid configuration!")
+		log.Panic("Missing configuration!")
 	}
 
 	router := Routes()
