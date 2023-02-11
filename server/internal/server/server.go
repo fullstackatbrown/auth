@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/fullstackatbrown/auth-infrastructure/config"
-	rtr "github.com/fullstackatbrown/auth-infrastructure/router"
+	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
+	rtr "github.com/fullstackatbrown/auth-infrastructure/internal/router"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/cors"

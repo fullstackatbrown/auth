@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/fullstackatbrown/auth-infrastructure/server"
+	"github.com/fullstackatbrown/auth-infrastructure/internal/server"
 )
 
 func main() {
