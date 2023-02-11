@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/fullstackatbrown/auth-infrastructure/config"
+	rtr "github.com/fullstackatbrown/auth-infrastructure/router"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/cors"
@@ -14,17 +15,11 @@ import (
 func Routes() *chi.Mux {
 	router := chi.NewRouter()
 	router.Use(
-		middleware.Logger, // Log API Request Calls
+		middleware.Logger,
 	)
 
-	router.Route("/", func(r chi.Router) {
-		// r.Mount("/", rtr.HealthRoutes())
-	})
-
 	router.Route("/v1", func(r chi.Router) {
-		// r.Mount("/users", rtr.AuthRoutes())
-		// r.Mount("/courses", rtr.CourseRoutes())
-		// r.Mount("/queues", rtr.QueueRoutes())
+		r.Mount("/users", rtr.AuthRoutes())
 	})
 
 	return router
