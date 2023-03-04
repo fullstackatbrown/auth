@@ -50,7 +50,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 
 	return &ServerConfig{
 		AllowedOrigins:          []string{"http://localhost:3000"},
-		AllowedEmailDomains:     []string{"brown.edu", "gmail.com"},
+		AllowedEmailDomains:     []string{"@brown.edu"},
 		IsHTTPS:                 false,
 		SessionCookieName:       "fsab-session",
 		SessionCookieExpiration: time.Hour * 24 * 14,
