@@ -9,7 +9,7 @@ import (
 func init() {
 	// Setup the mgm default config
 	// Default config has 10 second connection timeout
-	if err := mgm.SetDefaultConfig(nil, "auth", options.Client().ApplyURI(config.Config.MongoUri)); err != nil {
+	if err := mgm.SetDefaultConfig(nil, config.Config.DbName, options.Client().ApplyURI(config.Config.MongoUri)); err != nil {
 		panic(err)
 	}
 }
