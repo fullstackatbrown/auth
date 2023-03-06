@@ -1,4 +1,4 @@
-package models
+package model
 
 import "github.com/kamva/mgm/v3"
 
