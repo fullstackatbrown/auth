@@ -15,3 +15,7 @@ func NewUser(name string, pronouns string) *User {
 		Pronouns: pronouns,
 	}
 }
+
+func (model *User) CollectionName() string {
+	return "users"
+}
