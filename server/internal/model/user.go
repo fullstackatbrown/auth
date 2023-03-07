@@ -6,12 +6,14 @@ type User struct {
 	// DefaultModel adds _id, created_at and updated_at fields to the Model.
 	mgm.DefaultModel `bson:",inline"`
 	Name             string `json:"name" bson:"name"`
+	Email            string `json:"email" bson:"email"`
 	Pronouns         string `json:"pronouns" bson:"pronouns"`
 }
 
-func NewUser(name string, pronouns string) *User {
+func NewUser(name string, email string, pronouns string) *User {
 	return &User{
 		Name:     name,
+		Email:    email,
 		Pronouns: pronouns,
 	}
 }
