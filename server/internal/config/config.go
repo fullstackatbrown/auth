@@ -25,7 +25,7 @@ type ServerConfig struct {
 	// SessionCookieExpiration is the amount of time a session cookie is valid. Max 5 days.
 	SessionCookieExpiration time.Duration
 	// Port is the port the server should run on.
-	Port int
+	Port string
 	// Google OAuth2 config
 	OAuth2 *oauth2.Config
 	// MongoDB Atlas cluster URI
@@ -38,7 +38,6 @@ func DefaultDevelopmentConfig() *ServerConfig {
 	godotenv.Load()
 
 	oauth := &oauth2.Config{
-		RedirectURL:  "http://localhost:8000/callback",
 		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
@@ -51,10 +50,10 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		IsHTTPS:                 false,
 		SessionCookieName:       "fsab-session",
 		SessionCookieExpiration: time.Hour * 24 * 14,
-		Port:                    8000,
+		Port:                    os.Getenv("PORT"),
 		OAuth2:                  oauth,
-		MongoUri:                env["MONGO_URI"],
-		DbName:                  env["DB_NAME"],
+		MongoUri:                os.Getenv("MONGO_URI"),
+		DbName:                  os.Getenv("DB_NAME"),
 	}
 }
 
