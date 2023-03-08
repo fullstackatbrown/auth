@@ -8,6 +8,7 @@ type User struct {
 	Name             string `json:"name" bson:"name"`
 	Email            string `json:"email" bson:"email"`
 	Pronouns         string `json:"pronouns" bson:"pronouns"`
+	// TODO: Optional fields
 }
 
 func NewUser(name string, email string, pronouns string) *User {
