@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	"os"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -35,15 +35,12 @@ type ServerConfig struct {
 }
 
 func DefaultDevelopmentConfig() *ServerConfig {
-	env, err := godotenv.Read()
-	if err != nil {
-		log.Panic("Error loading env file.")
-	}
+	godotenv.Load()
 
 	oauth := &oauth2.Config{
 		RedirectURL:  "http://localhost:8000/callback",
-		ClientID:     env["GOOGLE_CLIENT_ID"],
-		ClientSecret: env["GOOGLE_CLIENT_SECRET"],
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		Endpoint:     google.Endpoint,
 	}
