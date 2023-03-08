@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	"os"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -25,33 +25,35 @@ type ServerConfig struct {
 	// SessionCookieExpiration is the amount of time a session cookie is valid. Max 5 days.
 	SessionCookieExpiration time.Duration
 	// Port is the port the server should run on.
-	Port int
+	Port string
 	// Google OAuth2 config
 	OAuth2 *oauth2.Config
+	// MongoDB Atlas cluster URI
+	MongoUri string
+	// Database name
+	DbName string
 }
 
 func DefaultDevelopmentConfig() *ServerConfig {
-	env, err := godotenv.Read()
-	if err != nil {
-		log.Panic("Error loading env file.")
-	}
+	godotenv.Load()
 
 	oauth := &oauth2.Config{
-		RedirectURL:  "http://localhost:8000/callback",
-		ClientID:     env["GOOGLE_CLIENT_ID"],
-		ClientSecret: env["GOOGLE_CLIENT_SECRET"],
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		Endpoint:     google.Endpoint,
 	}
 
 	return &ServerConfig{
 		AllowedOrigins:          []string{"http://localhost:3000"},
-		AllowedEmailDomains:     []string{"brown.edu", "gmail.com"},
+		AllowedEmailDomains:     []string{"@brown.edu"},
 		IsHTTPS:                 false,
 		SessionCookieName:       "fsab-session",
 		SessionCookieExpiration: time.Hour * 24 * 14,
-		Port:                    8000,
+		Port:                    os.Getenv("PORT"),
 		OAuth2:                  oauth,
+		MongoUri:                os.Getenv("MONGO_URI"),
+		DbName:                  os.Getenv("DB_NAME"),
 	}
 }
 
