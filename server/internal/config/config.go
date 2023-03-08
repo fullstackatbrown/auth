@@ -28,6 +28,10 @@ type ServerConfig struct {
 	Port int
 	// Google OAuth2 config
 	OAuth2 *oauth2.Config
+	// MongoDB Atlas cluster URI
+	MongoUri string
+	// Database name
+	DbName string
 }
 
 func DefaultDevelopmentConfig() *ServerConfig {
@@ -52,6 +56,8 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		SessionCookieExpiration: time.Hour * 24 * 14,
 		Port:                    8000,
 		OAuth2:                  oauth,
+		MongoUri:                env["MONGO_URI"],
+		DbName:                  env["DB_NAME"],
 	}
 }
 
