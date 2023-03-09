@@ -32,6 +32,8 @@ type ServerConfig struct {
 	MongoUri string
 	// Database name
 	DbName string
+	// Root URL
+	RootUrl string
 }
 
 func DefaultDevelopmentConfig() *ServerConfig {
@@ -54,6 +56,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		OAuth2:                  oauth,
 		MongoUri:                os.Getenv("MONGO_URI"),
 		DbName:                  os.Getenv("DB_NAME"),
+		RootUrl:                 os.Getenv("ROOT_URL"),
 	}
 }
 

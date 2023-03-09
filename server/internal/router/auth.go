@@ -23,7 +23,7 @@ func DefaultAuthService() *auth.Service {
 		CookieDuration: time.Hour * 24 * 14, // cookie expires in 14 days
 		Issuer:         "fsab-auth",
 		DisableXSRF:    true,
-		URL:            "http://localhost:8000",
+		URL:            config.Config.RootUrl,
 		AvatarStore:    avatar.NewLocalFS("/tmp"),
 		ClaimsUpd: token.ClaimsUpdFunc(func(claims token.Claims) token.Claims { // modify issued token
 			if claims.User != nil {
