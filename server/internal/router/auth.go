@@ -24,7 +24,6 @@ func DefaultAuthService() *auth.Service {
 		CookieDuration: time.Hour * 24 * 14, // cookie expires in 14 days
 		Issuer:         "fsab-auth",
 		DisableXSRF:    true,
-		// JWTCookieName:  "fsab-auth",
 		SecureCookies:  true,
 		SameSiteCookie: http.SameSiteNoneMode,
 		URL:            config.Config.RootUrl,
