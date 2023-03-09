@@ -47,7 +47,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 	}
 
 	return &ServerConfig{
-		AllowedOrigins:          []string{"localhost:3000", "localhost:8080", "here-backend.up.railway.app"},
+		AllowedOrigins:          []string{"localhost:3000", "localhost:8080", "https://here-backend.up.railway.app"},
 		AllowedEmailDomains:     []string{"@brown.edu"},
 		IsHTTPS:                 false,
 		SessionCookieName:       "fsab-session",
