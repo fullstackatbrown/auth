@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
-	"github.com/go-chi/chi/v5"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
 	"github.com/go-pkgz/auth/provider"
@@ -81,16 +80,4 @@ func DefaultAuthService() *auth.Service {
 	})
 
 	return service
-}
-
-func AuthRoutes() *chi.Mux {
-	router := chi.NewRouter()
-
-	service := DefaultAuthService()
-	authRoutes, avaRoutes := service.Handlers()
-
-	router.Mount("/", authRoutes)
-	router.Mount("/avatar", avaRoutes)
-
-	return router
 }

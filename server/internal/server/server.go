@@ -24,7 +24,9 @@ func Start() {
 	)
 
 	// setup auth routes
-	router.Mount("/auth", rtr.AuthRoutes())
+	authRoutes, avaRoutes := rtr.DefaultAuthService().Handlers()
+	router.Mount("/auth", authRoutes)
+	router.Mount("/avatar", avaRoutes)
 
 	// setup user routes
 	router.Mount("/users", rtr.UserRoutes())
