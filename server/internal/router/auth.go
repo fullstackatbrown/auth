@@ -18,13 +18,13 @@ func DefaultAuthService() *auth.Service {
 		SecretReader: token.SecretFunc(func(id string) (string, error) { // secret key for JWT
 			return "secret", nil
 		}),
-		TokenDuration:  time.Hour * 24 * 14, // token expires in 14 days
-		CookieDuration: time.Hour * 24 * 14, // cookie expires in 14 days
-		Issuer:         "fsab-auth",
-		DisableXSRF:    true,
-		JWTCookieName:  ".up.railway.app",
-		URL:            config.Config.RootUrl,
-		AvatarStore:    avatar.NewLocalFS("/tmp"),
+		TokenDuration:   time.Hour * 24 * 14, // token expires in 14 days
+		CookieDuration:  time.Hour * 24 * 14, // cookie expires in 14 days
+		Issuer:          "fsab-auth",
+		DisableXSRF:     true,
+		JWTCookieDomain: ".up.railway.app",
+		URL:             config.Config.RootUrl,
+		AvatarStore:     avatar.NewLocalFS("/tmp"),
 		ClaimsUpd: token.ClaimsUpdFunc(func(claims token.Claims) token.Claims { // modify issued token
 			if claims.User != nil {
 				// check if user is in allowed email domains
