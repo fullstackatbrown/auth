@@ -58,7 +58,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		OAuth2:                  oauth,
 		MongoUri:                os.Getenv("MONGO_URI"),
 		DbName:                  os.Getenv("DB_NAME"),
-		RootUrl:                 os.Getenv("ROOT_URL"),
+		RootUrl:                 os.Getenv("AUTH_ROOT_URL"),
 		CookieDomain:            os.Getenv("COOKIE_DOMAIN"),
 	}
 }
