@@ -12,11 +12,14 @@ require (
 	golang.org/x/oauth2 v0.5.0
 )
 
+require github.com/ajg/form v1.5.1 // indirect
+
 require (
 	cloud.google.com/go/compute/metadata v0.2.0 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dghubble/oauth1 v0.7.1 // indirect
+	github.com/go-chi/render v1.0.2
 	github.com/go-oauth2/oauth2/v4 v4.5.1 // indirect
 	github.com/go-pkgz/repeater v1.1.3 // indirect
 	github.com/go-pkgz/rest v1.16.0 // indirect

@@ -7,8 +7,7 @@ type User struct {
 	mgm.DefaultModel `bson:",inline"`
 	Name             string `json:"name" bson:"name"`
 	Email            string `json:"email" bson:"email"`
-	Pronouns         string `json:"pronouns" bson:"pronouns"`
-	// TODO: Optional fields
+	Pronouns         string `json:"pronouns,omitempty" bson:"pronouns,omitempty"`
 }
 
 func NewUser(name string, email string, pronouns string) *User {

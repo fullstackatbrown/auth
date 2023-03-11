@@ -32,6 +32,10 @@ type ServerConfig struct {
 	MongoUri string
 	// Database name
 	DbName string
+	// Root URL
+	RootUrl string
+	// Cookie Domain
+	CookieDomain string
 }
 
 func DefaultDevelopmentConfig() *ServerConfig {
@@ -45,7 +49,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 	}
 
 	return &ServerConfig{
-		AllowedOrigins:          []string{"http://localhost:3000"},
+		AllowedOrigins:          []string{"localhost:3000", "localhost:8080", "https://here-backend.up.railway.app"}, // TODO: env var and prune unused
 		AllowedEmailDomains:     []string{"@brown.edu"},
 		IsHTTPS:                 false,
 		SessionCookieName:       "fsab-session",
@@ -54,6 +58,8 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		OAuth2:                  oauth,
 		MongoUri:                os.Getenv("MONGO_URI"),
 		DbName:                  os.Getenv("DB_NAME"),
+		RootUrl:                 os.Getenv("AUTH_ROOT_URL"),
+		CookieDomain:            os.Getenv("COOKIE_DOMAIN"),
 	}
 }
 
