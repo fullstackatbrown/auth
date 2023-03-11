@@ -2,7 +2,6 @@ package router
 
 import (
 	"crypto/sha1"
-	"net/http"
 	"strings"
 	"time"
 
@@ -23,8 +22,7 @@ func DefaultAuthService() *auth.Service {
 		CookieDuration: time.Hour * 24 * 14, // cookie expires in 14 days
 		Issuer:         "fsab-auth",
 		DisableXSRF:    true,
-		SecureCookies:  true,
-		SameSiteCookie: http.SameSiteNoneMode,
+		JWTCookieName:  ".up.railway.app",
 		URL:            config.Config.RootUrl,
 		AvatarStore:    avatar.NewLocalFS("/tmp"),
 		ClaimsUpd: token.ClaimsUpdFunc(func(claims token.Claims) token.Claims { // modify issued token
