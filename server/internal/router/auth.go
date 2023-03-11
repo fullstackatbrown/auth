@@ -2,6 +2,7 @@ package router
 
 import (
 	"crypto/sha1"
+	"net/http"
 	"strings"
 	"time"
 
@@ -13,7 +14,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-func DefaultAuthService() *auth.Service {
+func AuthRoutes() (http.Handler, http.Handler) {
 	opts := auth.Opts{
 		SecretReader: token.SecretFunc(func(id string) (string, error) { // secret key for JWT
 			return "secret", nil
@@ -77,5 +78,5 @@ func DefaultAuthService() *auth.Service {
 		Scopes: []string{"profile", "email"},
 	})
 
-	return service
+	return service.Handlers()
 }
