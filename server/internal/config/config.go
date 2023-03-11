@@ -34,6 +34,8 @@ type ServerConfig struct {
 	DbName string
 	// Root URL
 	RootUrl string
+	// Cookie Domain
+	CookieDomain string
 }
 
 func DefaultDevelopmentConfig() *ServerConfig {
@@ -57,6 +59,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		MongoUri:                os.Getenv("MONGO_URI"),
 		DbName:                  os.Getenv("DB_NAME"),
 		RootUrl:                 os.Getenv("ROOT_URL"),
+		CookieDomain:            os.Getenv("COOKIE_DOMAIN"),
 	}
 }
 
