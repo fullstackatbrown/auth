@@ -3,16 +3,21 @@ package handler
 import (
 	"net/http"
 
+	"github.com/fullstackatbrown/auth-infrastructure/internal/db"
 	"github.com/go-chi/render"
 )
 
 func GetUserByEmail(w http.ResponseWriter, r *http.Request) {
-	render.JSON(w, r, map[string]string{"user": "user1"})
+	// get email from query param
+	email := r.URL.Query().Get("email")
+
+	// handle error
+	user, _ := db.FindUserByEmail(email)
+
+	render.JSON(w, r, user)
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(204)
-	w.Write([]byte("User deleted"))
 }
 
 func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
