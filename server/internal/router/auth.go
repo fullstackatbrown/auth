@@ -34,7 +34,8 @@ func AuthRoutes() (http.Handler, http.Handler) {
 				if len(config.Config.AllowedEmailDomains) > 0 {
 					for _, domain := range config.Config.AllowedEmailDomains {
 						if strings.HasSuffix(claims.User.Email, domain) {
-							// TODO save to db and add roles and stuff
+							// TODO attach assignments to user
+							// FIXME: creating a user here will somehow create two users with the same email
 							db.CreateUser(model.NewUser(claims.User.Email))
 							return claims
 						}
