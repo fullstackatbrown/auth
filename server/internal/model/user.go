@@ -5,16 +5,23 @@ import "github.com/kamva/mgm/v3"
 type User struct {
 	// DefaultModel adds _id, created_at and updated_at fields to the Model.
 	mgm.DefaultModel `bson:",inline"`
-	Name             string `json:"name" bson:"name"`
-	Email            string `json:"email" bson:"email"`
-	Pronouns         string `json:"pronouns,omitempty" bson:"pronouns,omitempty"`
+	Profile          Profile `json:"" bson:""`
+	Roles            Roles   `json:"roles,omitempty" bson:"roles,omitempty"`
 }
 
-func NewUser(name string, email string, pronouns string) *User {
+type Profile struct {
+	Name     string `json:"name,omitempty" bson:"name,omitempty"`
+	Email    string `json:"email" bson:"email"`
+	Pronouns string `json:"pronouns,omitempty" bson:"pronouns,omitempty"`
+}
+
+type Roles []string
+
+func NewUser(email string) *User {
 	return &User{
-		Name:     name,
-		Email:    email,
-		Pronouns: pronouns,
+		Profile: Profile{
+			Email: email,
+		},
 	}
 }
 
