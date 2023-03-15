@@ -27,10 +27,10 @@ func UserRoutes() *chi.Mux {
 func userProfileRoutes() *chi.Mux {
 	router := chi.NewRouter()
 
-	router.Get("/", handler.GetProfile)
+	router.Get("/", handler.GetUserProfile)
 
 	// TODO: require the target user to match the logged in user
-	router.Patch("/", handler.UpdateProfile)
+	router.Patch("/", handler.UpdateUserProfile)
 
 	return router
 }
@@ -38,11 +38,11 @@ func userProfileRoutes() *chi.Mux {
 func userRolesRoutes() *chi.Mux {
 	router := chi.NewRouter()
 
-	router.Get("/", handler.ListRoles)
+	router.Get("/", handler.ListUserRoles)
 
 	// TODO: Require admin
-	router.Post("/", handler.AddRole)
-	router.Delete("/", handler.RemoveRole)
+	router.Post("/", handler.AddUserRole)
+	router.Delete("/", handler.RemoveUserRole)
 
 	return router
 }
