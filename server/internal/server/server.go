@@ -33,6 +33,10 @@ func Start() {
 	// setup user routes, including profile and roles
 	router.Mount("/users", rtr.UserRoutes())
 
+	// setup assignment routes
+	// TODO: require admin
+	router.Mount("/assignments", rtr.AssignmentRoutes())
+
 	// setup domain routes
 	router.Mount("/domains", rtr.DomainRoutes())
 
