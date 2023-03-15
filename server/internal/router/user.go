@@ -9,8 +9,6 @@ func UserRoutes() *chi.Mux {
 	// TODO: Require authentication
 	router := chi.NewRouter()
 
-	router.Post("/", handler.CreateUser)
-
 	router.Route("/{userId}", func(r chi.Router) {
 		// TODO: Get user by email query param
 		r.Get("/", handler.GetUser)
