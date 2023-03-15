@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
+	"github.com/fullstackatbrown/auth-infrastructure/internal/db"
+	"github.com/fullstackatbrown/auth-infrastructure/internal/model"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
 	"github.com/go-pkgz/auth/provider"
@@ -33,6 +35,7 @@ func AuthRoutes() (http.Handler, http.Handler) {
 					for _, domain := range config.Config.AllowedEmailDomains {
 						if strings.HasSuffix(claims.User.Email, domain) {
 							// TODO save to db and add roles and stuff
+							db.CreateUser(model.NewUser(claims.User.Email))
 							return claims
 						}
 					}
