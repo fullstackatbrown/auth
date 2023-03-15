@@ -18,9 +18,8 @@ func FindUserById(id string) (user *model.User, err error) {
 	return
 }
 
-func FindUserByEmail(email string) (user *model.User, err error) {
-	users := []model.User{}
-	err = mgm.Coll(user).SimpleFind(&users, bson.M{"email": bson.M{operator.Eq: email}})
-	user = &users[0]
+func FindUsersByEmail(email string) (users []model.User, err error) {
+	users = []model.User{}
+	err = mgm.Coll(&model.User{}).SimpleFind(&users, bson.M{"email": bson.M{operator.Eq: email}})
 	return
 }

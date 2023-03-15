@@ -12,9 +12,9 @@ func GetUserByEmail(w http.ResponseWriter, r *http.Request) {
 	email := r.URL.Query().Get("email")
 
 	// handle error
-	user, _ := db.FindUserByEmail(email)
+	users, _ := db.FindUsersByEmail(email)
 
-	render.JSON(w, r, user)
+	render.JSON(w, r, users)
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
