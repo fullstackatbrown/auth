@@ -6,7 +6,6 @@ import (
 )
 
 func UserRoutes() *chi.Mux {
-	// TODO: Require authentication
 	router := chi.NewRouter()
 
 	router.Route("/{userId}", func(r chi.Router) {

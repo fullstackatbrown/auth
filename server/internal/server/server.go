@@ -28,8 +28,13 @@ func Start() {
 	router.Mount("/auth", authRoutes)
 	router.Mount("/avatar", avaRoutes)
 
-	// setup user routes
+	// TODO: require authenticated request after this point
+
+	// setup user routes, including profile and roles
 	router.Mount("/users", rtr.UserRoutes())
+
+	// setup domain routes
+	router.Mount("/domains", rtr.DomainRoutes())
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   config.Config.AllowedOrigins,
