@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/render"
 )
 
-func GetUser(w http.ResponseWriter, r *http.Request) {
+func GetUserByEmail(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, map[string]string{"user": "user1"})
 }
 

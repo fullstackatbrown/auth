@@ -12,7 +12,7 @@ func RoleRoutes() *chi.Mux {
 
 	// TODO: Require admin
 	router.Post("/", handler.AddRole)
-	router.Delete("/{roleId}", handler.RemoveRole)
+	router.Delete("/", handler.RemoveRole)
 
 	return router
 }

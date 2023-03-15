@@ -10,12 +10,12 @@ func UserRoutes() *chi.Mux {
 	router := chi.NewRouter()
 
 	router.Route("/{userId}", func(r chi.Router) {
-		// TODO: Get user by email query param
-		r.Get("/", handler.GetUser)
+		r.Get("/", handler.GetUserByEmail)
 
 		// TODO: Require admin
 		r.Delete("/", handler.DeleteUser)
 
+		r.Mount("/profile", ProfileRoutes())
 		r.Mount("/roles", RoleRoutes())
 	})
 
