@@ -1,0 +1,112 @@
+openapi: "3.0.2"
+info:
+  title: Auth API
+  version: "1.0"
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://auth.up.railway.app
+    description: Remote development server
+paths:
+  /auth/google/login:
+    get:
+      description: ""
+      tags: [auth]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+  /auth/user:
+    get:
+      description: ""
+      tags: [auth]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+  /auth/status:
+    get:
+      description: ""
+      tags: [auth]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+  /auth/logout:
+    get:
+      description: ""
+      tags: [auth]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+  /users:
+    get:
+      description: "List all users with the given email."
+      tags: [users]
+      parameters:
+        - name: email
+          in: query
+          description: "The email of the user to search for"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /user/{userId}:
+    delete:
+      description: "Delete a user"
+      tags: [users]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content
+  /user/{userId}/profile:
+    get:
+      description: ""
+      tags: [users]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+    patch:
+      description: ""
+      tags: [users]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+  /user/{userId}/roles:
+    get:
+      description: ""
+      tags: [users]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+    post:
+      description: ""
+      tags: [users]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+    delete:
+      description: ""
+      tags: [users]
+      parameters:
+        - name: role
+          in: query
+          description: "The role to remove from the user."
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK

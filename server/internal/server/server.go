@@ -23,22 +23,24 @@ func Start() {
 		middleware.Logger,
 	)
 
-	// setup auth routes
-	authRoutes, avaRoutes := rtr.AuthRoutes()
-	router.Mount("/auth", authRoutes)
-	router.Mount("/avatar", avaRoutes)
+	router.Route("/v1", func(r chi.Router) {
+		// setup auth routes
+		authRoutes, avaRoutes := rtr.AuthRoutes()
+		r.Mount("/auth", authRoutes)
+		r.Mount("/avatar", avaRoutes)
 
-	// TODO: require authenticated request after this point
+		// TODO: require authenticated request after this point
 
-	// setup user routes, including profile and roles
-	router.Mount("/users", rtr.UserRoutes())
+		// setup user routes, including profile and roles
+		r.Mount("/users", rtr.UserRoutes())
 
-	// setup assignment routes
-	// TODO: require admin
-	router.Mount("/assignments", rtr.AssignmentRoutes())
+		// setup assignment routes
+		// TODO: require admin
+		r.Mount("/assignments", rtr.AssignmentRoutes())
 
-	// setup domain routes
-	router.Mount("/domains", rtr.DomainRoutes())
+		// setup domain routes
+		r.Mount("/domains", rtr.DomainRoutes())
+	})
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   config.Config.AllowedOrigins,
