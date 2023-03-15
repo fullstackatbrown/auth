@@ -3,9 +3,9 @@ info:
   title: Auth API
   version: "1.0"
 servers:
-  - url: http://localhost:8000
+  - url: http://localhost:8000/v1
     description: Local development server
-  - url: https://auth.up.railway.app
+  - url: https://auth.up.railway.app/v1
     description: Remote development server
 paths:
   /auth/google/login:
