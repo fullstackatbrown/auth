@@ -7,7 +7,7 @@ import (
 	"github.com/go-chi/render"
 )
 
-func GetUserByEmail(w http.ResponseWriter, r *http.Request) {
+func GetUsersByEmail(w http.ResponseWriter, r *http.Request) {
 	// get email from query param
 	email := r.URL.Query().Get("email")
 

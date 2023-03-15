@@ -3,7 +3,6 @@ package db
 import (
 	"github.com/fullstackatbrown/auth-infrastructure/internal/model"
 	"github.com/kamva/mgm/v3"
-	"github.com/kamva/mgm/v3/operator"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -20,6 +19,6 @@ func FindUserById(id string) (user *model.User, err error) {
 
 func FindUsersByEmail(email string) (users []model.User, err error) {
 	users = []model.User{}
-	err = mgm.Coll(&model.User{}).SimpleFind(&users, bson.M{"email": bson.M{operator.Eq: email}})
+	err = mgm.Coll(&model.User{}).SimpleFind(&users, bson.M{"profile.email": email})
 	return
 }

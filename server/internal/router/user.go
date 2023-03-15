@@ -8,8 +8,8 @@ import (
 func UserRoutes() *chi.Mux {
 	router := chi.NewRouter()
 
+	router.Get("/", handler.GetUsersByEmail)
 	router.Route("/{userId}", func(r chi.Router) {
-		r.Get("/", handler.GetUserByEmail)
 
 		// TODO: Require admin
 		r.Delete("/", handler.DeleteUser)
