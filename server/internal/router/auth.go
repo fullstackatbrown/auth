@@ -2,13 +2,13 @@ package router
 
 import (
 	"crypto/sha1"
-	"net/http"
 	"strings"
 	"time"
 
 	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
 	"github.com/fullstackatbrown/auth-infrastructure/internal/db"
 	"github.com/fullstackatbrown/auth-infrastructure/internal/model"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
 	"github.com/go-pkgz/auth/provider"
@@ -16,7 +16,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-func AuthRoutes() (http.Handler, http.Handler) {
+func AuthRoutes() *chi.Mux {
 	opts := auth.Opts{
 		SecretReader: token.SecretFunc(func(id string) (string, error) { // secret key for JWT
 			return "secret", nil
@@ -28,6 +28,7 @@ func AuthRoutes() (http.Handler, http.Handler) {
 		JWTCookieDomain: config.Config.CookieDomain,
 		URL:             config.Config.RootUrl,
 		AvatarStore:     avatar.NewLocalFS("/tmp"),
+		AvatarRoutePath: "/v1/auth/avatars",
 		ClaimsUpd: token.ClaimsUpdFunc(func(claims token.Claims) token.Claims { // modify issued token
 			if claims.User != nil {
 				// check if user is in allowed email domains
@@ -82,5 +83,9 @@ func AuthRoutes() (http.Handler, http.Handler) {
 		Scopes: []string{"profile", "email"},
 	})
 
-	return service.Handlers()
+	auth, ava := service.Handlers()
+	router := chi.NewRouter()
+	router.Mount("/", auth)
+	router.Mount("/avatars", ava)
+	return router
 }

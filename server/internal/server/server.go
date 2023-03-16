@@ -25,9 +25,7 @@ func Start() {
 
 	router.Route("/v1", func(r chi.Router) {
 		// setup auth routes
-		authRoutes, avaRoutes := rtr.AuthRoutes()
-		r.Mount("/auth", authRoutes)
-		r.Mount("/avatar", avaRoutes)
+		r.Mount("/auth", rtr.AuthRoutes())
 
 		// TODO: require authenticated request after this point
 
