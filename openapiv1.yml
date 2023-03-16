@@ -71,14 +71,24 @@ paths:
     get:
       description: ""
       tags: [users]
-      parameters: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
     patch:
       description: ""
       tags: [users]
-      parameters: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -86,14 +96,24 @@ paths:
     get:
       description: ""
       tags: [users]
-      parameters: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
     post:
       description: ""
       tags: [users]
-      parameters: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -101,9 +121,142 @@ paths:
       description: ""
       tags: [users]
       parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
         - name: role
           in: query
           description: "The role to remove from the user."
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /assignments:
+    get:
+      description: "List all assignments for a given email."
+      tags: [assignments]
+      parameters:
+        - name: email
+          in: query
+          description: "The email to search for."
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /assignments/{assignmentId}:
+    get:
+      description: ""
+      tags: [assignments]
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    delete:
+      description: ""
+      tags: [assignments]
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    patch:
+      description: ""
+      tags: [assignments]
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /domains:
+    post:
+      description: ""
+      tags: [domains]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+    get:
+      description: ""
+      tags: [domains]
+      parameters: []
+      responses:
+        "200":
+          description: OK
+  /domains/{domain}:
+    get:
+      description: ""
+      tags: [domains]
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    delete:
+      description: ""
+      tags: [domains]
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /domains/{domain}/roles:
+    get:
+      description: ""
+      tags: [domains]
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    post:
+      description: ""
+      tags: [domains]
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    delete:
+      description: ""
+      tags: [domains]
+      parameters:
+        - name: domain
+          in: path
           required: true
           schema:
             type: string
