@@ -4,6 +4,9 @@ import (
 	"net/http"
 )
 
+func GetDomain(w http.ResponseWriter, r *http.Request) {
+}
+
 func CreateDomain(w http.ResponseWriter, r *http.Request) {
 }
 

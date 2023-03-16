@@ -10,7 +10,7 @@ func DomainRoutes() *chi.Mux {
 
 	router.Post("/", handler.CreateDomain)
 	router.Route("/{domain}", func(r chi.Router) {
-		r.Get("/", handler.ListDomainRoles)
+		r.Get("/", handler.GetDomain)
 
 		// TODO: Require super admin
 		r.Delete("/", handler.DeleteDomain)
