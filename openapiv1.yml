@@ -40,6 +40,19 @@ paths:
       responses:
         "200":
           description: OK
+  /auth/avatars/{avatarId}:
+    get:
+      description: ""
+      tags: [auth]
+      parameters:
+        - name: avatarId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
   /users:
     get:
       description: "List all users with the given email."
