@@ -2,7 +2,7 @@
 
 ## Local Development Guide
 
-A `.env` secret file is needed to run the backend server. Request a copy of this file through our slack channel.
+A `.env` secret file is needed to run the backend server. No need for the `.env` file if you're using Codespaces. Request a copy of this file through our slack channel.
 
 To start the backend server, make sure you are in the `server` folder by running `cd server` from the project root, then run `make run` to start the backend server.
 
