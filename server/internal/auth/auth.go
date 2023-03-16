@@ -38,7 +38,7 @@ func defaultOpts() auth.Opts {
 						if strings.HasSuffix(claims.User.Email, domain) {
 							// TODO attach assignments to user
 							// FIXME: creating a user here will somehow create two users with the same email
-							db.CreateUser(model.NewUser(claims.User.Email))
+							db.CreateUser(model.NewUser(claims.User.ID, claims.User.Email))
 							return claims
 						}
 					}
@@ -65,8 +65,7 @@ func addGoogleProvider() {
 		InfoURL: "https://www.googleapis.com/oauth2/v3/userinfo",
 		MapUserFn: func(data provider.UserData, _ []byte) token.User {
 			userInfo := token.User{
-				ID: "google_" + token.HashID(sha1.New(),
-					data.Value("sub")),
+				ID:      token.HashID(sha1.New(), data.Value("sub")),
 				Name:    data.Value("name"),
 				Email:   data.Value("email"),
 				Picture: data.Value("picture"),
