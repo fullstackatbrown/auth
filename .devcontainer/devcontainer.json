@@ -1,12 +1,25 @@
 {
     "name": "Auth",
     "build": {
-        "dockerfile": "Dockerfile",
+        "dockerfile": "Dockerfile"
     },
-    "appPort": [
-        "8000:8000",
-        "3000:3000"
+    "forwardPorts": [
+        8000,
+        3000
     ],
+    "portsAttributes": {
+        "8000": {
+            "label": "Server",
+            "onAutoForward": "silent"
+        },
+        "3000": {
+            "label": "Client",
+            "onAutoForward": "silent"
+        }
+    },
+    "otherPortsAttributes": {
+        "onAutoForward": "silent"
+    },
     "customizations": {
         "vscode": {
             "extensions": [
