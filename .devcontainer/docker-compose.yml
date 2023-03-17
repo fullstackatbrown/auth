@@ -2,28 +2,43 @@ version: '3.8'
 
 services:
   app:
+    container_name: codespace
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VARIANT: 1-bullseye
+        NODE_VERSION: "18"
+    command: sleep infinity
+
     ports:
       - "8000:8000"
       - "3000:3000"
+
     environment:
-      NODE_VERSION: "18"
+      PORT: 8000
+      MONGO_URI: "mongodb://auth_admin:authdb:27017/"
+      DB_NAME: "auth"
+      AUTH_ROOT_URL: "http://localhost:8000"
+      COOKIE_DOMAIN: "localhost"
+
     volumes:
       - .:/workspace
-    command: sleep infinity
 
   db:
+    container_name: mongodb
     image: mongo:latest
     restart: unless-stopped
+
     volumes:
       - mongodb-data:/data/db
+
     ports:
       - 27017:27017
+
     environment:
-      MONGO_INITDB_ROOT_USERNAME:
-      MONGO_INITDB_ROOT_PASSWORD:
+      MONGO_INITDB_ROOT_USERNAME: auth_admin
+      MONGO_INITDB_ROOT_PASSWORD: auth
       MONGO_INITDB_DATABASE: auth
 
 volumes:
