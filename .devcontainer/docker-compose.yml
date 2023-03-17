@@ -7,39 +7,30 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        VARIANT: 1-bullseye
+        VARIANT: "1-bullseye"
         NODE_VERSION: "18"
     command: sleep infinity
-
     ports:
       - "8000:8000"
       - "3000:3000"
-
     environment:
-      PORT: 8000
+      PORT: "8000"
       MONGO_URI: "mongodb://db:27017/"
       DB_NAME: "auth"
       AUTH_ROOT_URL: "http://localhost:8000"
       COOKIE_DOMAIN: "localhost"
-
     volumes:
       - .:/workspace
 
   db:
-    container_name: mongodb
+    container_name: db
     image: mongo:latest
     restart: unless-stopped
-
     volumes:
-      - mongodb-data:/data/db
-
+      - db-data:/data/db
+      - ./init-db:/docker-entrypoint-initdb.d
     ports:
-      - 27017:27017
-
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: auth_admin
-      MONGO_INITDB_ROOT_PASSWORD: auth
-      MONGO_INITDB_DATABASE: auth
+      - "27017:27017"
 
 volumes:
-  mongodb-data:
+  db-data:
