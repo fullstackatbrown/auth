@@ -38,7 +38,8 @@ func defaultOpts() auth.Opts {
 						if strings.HasSuffix(claims.User.Email, domain) {
 							// TODO attach assignments to user
 							// FIXME: creating a user here will somehow create two users with the same email
-							db.CreateUser(model.NewUser(claims.User.ID, claims.User.Email))
+							user := model.NewUser(claims.User.ID, claims.User.Name, claims.User.Email)
+							db.CreateUser(user)
 							return claims
 						}
 					}

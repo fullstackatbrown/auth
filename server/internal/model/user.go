@@ -7,23 +7,25 @@ type User struct {
 	mgm.DefaultModel `bson:",inline"`
 	GoogleId         string  `json:"googleId" bson:"googleId"`
 	Profile          Profile `json:"profile" bson:"profile"`
-	Roles            Roles   `json:"roles,omitempty" bson:"roles,omitempty"`
+	Roles            Roles   `json:"roles" bson:"roles"`
 }
 
 type Profile struct {
-	Name     string `json:"name,omitempty" bson:"name,omitempty"`
+	Name     string `json:"name" bson:"name"`
 	Email    string `json:"email" bson:"email"`
 	Pronouns string `json:"pronouns,omitempty" bson:"pronouns,omitempty"`
 }
 
 type Roles []string
 
-func NewUser(googleId string, email string) *User {
+func NewUser(googleId string, name string, email string) *User {
 	return &User{
 		GoogleId: googleId,
 		Profile: Profile{
+			Name:  name,
 			Email: email,
 		},
+		Roles: []string{},
 	}
 }
 
