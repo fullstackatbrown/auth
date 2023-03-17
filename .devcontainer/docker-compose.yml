@@ -28,7 +28,6 @@ services:
     restart: unless-stopped
     volumes:
       - db-data:/data/db
-      - ./init-db:/docker-entrypoint-initdb.d
     ports:
       - "27017:27017"
 
