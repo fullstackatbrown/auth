@@ -17,7 +17,7 @@ services:
 
     environment:
       PORT: 8000
-      MONGO_URI: "mongodb://auth_admin:authdb:27017/"
+      MONGO_URI: "mongodb://db:27017/"
       DB_NAME: "auth"
       AUTH_ROOT_URL: "http://localhost:8000"
       COOKIE_DOMAIN: "localhost"
