@@ -1,11 +1,11 @@
 {
     "name": "Auth",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
     "forwardPorts": [
         8000,
-        3000
+        3000,
+        27017
     ],
     "portsAttributes": {
         "8000": {
@@ -15,6 +15,10 @@
         "3000": {
             "label": "Client",
             "onAutoForward": "silent"
+        },
+        "27017": {
+            "label": "DB",
+            "onAutoForward": "silent"
         }
     },
     "otherPortsAttributes": {
@@ -23,7 +27,11 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-vscode.go"
+                "ms-vscode.go",
+                "dbaeumer.vscode-eslint",
+                "rangav.vscode-thunder-client",
+                "mongodb.mongodb-vscode",
+                "42Crunch.vscode-openapi"
             ]
         }
     }
