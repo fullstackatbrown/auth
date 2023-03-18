@@ -4,6 +4,7 @@ import (
 	"github.com/fullstackatbrown/auth-infrastructure/internal/model"
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func CreateUser(user *model.User) (err error) {
@@ -30,5 +31,11 @@ func DeleteUser(userId string) (err error) {
 		return err
 	}
 	err = mgm.Coll(&model.User{}).Delete(user)
+	return
+}
+
+func UpsertUser(user *model.User) (err error) {
+	upsert := true
+	err = mgm.Coll(user).Update(user, &options.UpdateOptions{Upsert: &upsert})
 	return
 }
