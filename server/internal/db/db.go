@@ -19,8 +19,12 @@ func Create(model mgm.Model) (err error) {
 	return
 }
 
-func Upsert(model mgm.Model) (err error) {
-	upsert := true
+func Update(model mgm.Model, upsert bool) (err error) {
 	err = mgm.Coll(model).Update(model, &options.UpdateOptions{Upsert: &upsert})
+	return
+}
+
+func Delete(model mgm.Model) (err error) {
+	err = mgm.Coll(model).Delete(model)
 	return
 }
