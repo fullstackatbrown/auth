@@ -8,3 +8,14 @@ type Assignment struct {
 	Email            string `json:"email" bson:"email"`
 	Roles            Roles  `json:"roles" bson:"roles"`
 }
+
+func NewAssignment(email string, roles Roles) *Assignment {
+	return &Assignment{
+		Email: email,
+		Roles: roles,
+	}
+}
+
+func (model *Assignment) CollectionName() string {
+	return "assignments"
+}
