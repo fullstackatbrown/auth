@@ -67,7 +67,7 @@ paths:
       responses:
         "200":
           description: OK
-  /user/{userId}:
+  /users/{userId}:
     delete:
       description: "Delete a user"
       tags: [users]
@@ -80,7 +80,7 @@ paths:
       responses:
         "204":
           description: No Content
-  /user/{userId}/profile:
+  /users/{userId}/profile:
     get:
       description: ""
       tags: [users]
@@ -105,7 +105,7 @@ paths:
       responses:
         "200":
           description: OK
-  /user/{userId}/roles:
+  /users/{userId}/roles:
     get:
       description: ""
       tags: [users]

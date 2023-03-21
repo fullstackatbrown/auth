@@ -36,16 +36,15 @@ func defaultOpts() auth.Opts {
 				if len(config.Config.AllowedEmailDomains) > 0 {
 					for _, domain := range config.Config.AllowedEmailDomains {
 						if strings.HasSuffix(claims.User.Email, domain) {
-							// TODO attach assignments to user
-							user := model.NewUser(claims.User.ID, claims.User.Name, claims.User.Email)
-							db.UpsertUser(user)
-							return claims
+							userLoginHandler(claims.User)
+							break
 						}
 					}
-					return claims // don't save to db
+				} else {
+					userLoginHandler(claims.User)
 				}
 			}
-			return claims // don't save to db
+			return claims
 		}),
 	}
 	return opts
@@ -90,4 +89,10 @@ func init() {
 	Service = auth.NewService(opts)
 
 	addGoogleProvider()
+}
+
+func userLoginHandler(user *token.User) {
+	// TODO attach assignments to user
+	dbUser := model.NewUser(user.ID, user.Name, user.Email)
+	db.UpsertUser(dbUser)
 }
