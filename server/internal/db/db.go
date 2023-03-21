@@ -13,3 +13,14 @@ func init() {
 		panic(err)
 	}
 }
+
+func Create(model mgm.Model) (err error) {
+	err = mgm.Coll(model).Create(model)
+	return
+}
+
+func Upsert(model mgm.Model) (err error) {
+	upsert := true
+	err = mgm.Coll(model).Update(model, &options.UpdateOptions{Upsert: &upsert})
+	return
+}
