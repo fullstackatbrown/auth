@@ -175,18 +175,6 @@ paths:
       responses:
         "200":
           description: OK
-    delete:
-      description: ""
-      tags: [assignments]
-      parameters:
-        - name: assignmentId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
     patch:
       description: ""
       tags: [assignments]
@@ -199,7 +187,69 @@ paths:
       responses:
         "200":
           description: OK
+    delete:
+      description: ""
+      tags: [assignments]
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /assignments/{assignmentId}/roles:
+    get:
+      description: ""
+      tags: [assignments]
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    post:
+      description: ""
+      tags: [assignments]
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    delete:
+      description: ""
+      tags: [assignments]
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
   /domains:
+    get:
+      description: ""
+      tags: [domains]
+      parameters:
+        - name: name
+          in: query
+          description: "The name of the domain to search for."
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
     post:
       description: ""
       tags: [domains]
@@ -207,19 +257,24 @@ paths:
       responses:
         "200":
           description: OK
-    get:
-      description: ""
-      tags: [domains]
-      parameters: []
-      responses:
-        "200":
-          description: OK
-  /domains/{domain}:
+  /domains/{domainId}:
     get:
       description: ""
       tags: [domains]
       parameters:
-        - name: domain
+        - name: domainId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    patch:
+      description: ""
+      tags: [domains]
+      parameters:
+        - name: domainId
           in: path
           required: true
           schema:
@@ -239,12 +294,12 @@ paths:
       responses:
         "200":
           description: OK
-  /domains/{domain}/roles:
+  /domains/{domainId}/roles:
     get:
       description: ""
       tags: [domains]
       parameters:
-        - name: domain
+        - name: domainId
           in: path
           required: true
           schema:
@@ -256,7 +311,7 @@ paths:
       description: ""
       tags: [domains]
       parameters:
-        - name: domain
+        - name: domainId
           in: path
           required: true
           schema:
@@ -268,7 +323,7 @@ paths:
       description: ""
       tags: [domains]
       parameters:
-        - name: domain
+        - name: domainId
           in: path
           required: true
           schema:
