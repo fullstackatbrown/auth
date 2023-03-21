@@ -16,8 +16,6 @@ type Profile struct {
 	Pronouns string `json:"pronouns,omitempty" bson:"pronouns,omitempty"`
 }
 
-type Roles []string
-
 func NewUser(googleId string, name string, email string) *User {
 	return &User{
 		GoogleId: googleId,
@@ -25,7 +23,7 @@ func NewUser(googleId string, name string, email string) *User {
 			Name:  name,
 			Email: email,
 		},
-		Roles: []string{},
+		Roles: []Role{},
 	}
 }
 
