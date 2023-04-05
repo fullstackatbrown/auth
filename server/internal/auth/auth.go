@@ -94,5 +94,5 @@ func init() {
 func userLoginHandler(user *token.User) {
 	// TODO attach assignments to user
 	dbUser := model.NewUser(user.ID, user.Name, user.Email)
-	db.UpsertUser(dbUser)
+	db.Update(dbUser, true)
 }
