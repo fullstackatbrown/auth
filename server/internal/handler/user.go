@@ -20,6 +20,19 @@ func GetUsersByEmail(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	// get user id from path param
+	userId := chi.URLParam(r, "userId")
+
+	// delete user from db
+	err := db.DeleteUser(userId)
+	if err != nil && err != mongo.ErrNoDocuments {
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{"message": "internal server error"})
+		return
+	}
+
+	render.Status(r, http.StatusNoContent)
+	render.JSON(w, r, map[string]string{"message": "user deleted"})
 }
 
 func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
