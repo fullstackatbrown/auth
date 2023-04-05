@@ -69,15 +69,6 @@ func AddUserRole(w http.ResponseWriter, r *http.Request) {
 	// get user id from path param
 	userId := chi.URLParam(r, "userId")
 
-	// get role from body
-	var role model.Role
-	err := render.DecodeJSON(r.Body, &role)
-	if err != nil {
-		render.Status(r, http.StatusBadRequest)
-		render.JSON(w, r, map[string]string{"message": "invalid request body"})
-		return
-	}
-
 	// get user object from db
 	user, err := db.FindUserById(userId)
 	if err != nil {
@@ -88,6 +79,15 @@ func AddUserRole(w http.ResponseWriter, r *http.Request) {
 		}
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, map[string]string{"message": "internal server error"})
+		return
+	}
+
+	// get role from body
+	var role model.Role
+	err = render.DecodeJSON(r.Body, &role)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, map[string]string{"message": "invalid request body"})
 		return
 	}
 
