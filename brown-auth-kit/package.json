@@ -1,0 +1,20 @@
+{
+  "name": "brown-auth-kit",
+  "version": "0.1.0",
+  "description": "A client utility library for using the FullStackAtBrown authentication system",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Nicholas Bottone",
+  "license": "ISC",
+  "repository": "https://github.com/fullstackatbrown/auth-infrastructure",
+  "bugs": "https://github.com/fullstackatbrown/auth-infrastructure/issues",
+  "devDependencies": {
+    "typescript": "^5.0.3"
+  }
+}
