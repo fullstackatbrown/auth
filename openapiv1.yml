@@ -127,6 +127,17 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                domain:
+                  type: string
+                role:
+                  type: string
       responses:
         "200":
           description: OK
