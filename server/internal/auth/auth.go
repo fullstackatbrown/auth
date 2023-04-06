@@ -10,12 +10,14 @@ import (
 	"github.com/fullstackatbrown/auth-infrastructure/internal/model"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
+	"github.com/go-pkgz/auth/middleware"
 	"github.com/go-pkgz/auth/provider"
 	"github.com/go-pkgz/auth/token"
 	"golang.org/x/oauth2"
 )
 
 var Service *auth.Service
+var Middleware middleware.Authenticator
 
 func defaultOpts() auth.Opts {
 	opts := auth.Opts{
@@ -87,6 +89,7 @@ func addGoogleProvider() {
 func init() {
 	opts := defaultOpts()
 	Service = auth.NewService(opts)
+	Middleware = Service.Middleware()
 
 	addGoogleProvider()
 }
