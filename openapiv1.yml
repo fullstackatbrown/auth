@@ -163,6 +163,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: domain
+          in: query
+          description: "The domain of the role to remove from the user."
+          required: true
+          schema:
+            type: string
         - name: role
           in: query
           description: "The role to remove from the user."
