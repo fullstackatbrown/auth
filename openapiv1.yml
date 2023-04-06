@@ -307,7 +307,7 @@ paths:
       description: ""
       tags: [domains]
       parameters:
-        - name: domain
+        - name: domainId
           in: path
           required: true
           schema:
