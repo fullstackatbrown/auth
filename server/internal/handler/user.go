@@ -71,6 +71,26 @@ func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserProfile(w http.ResponseWriter, r *http.Request) {
+	// get user id from path param
+	userId := chi.URLParam(r, "userId")
+
+	// get user object from db
+	user, err := db.FindUserById(userId)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			render.Status(r, http.StatusNotFound)
+			render.JSON(w, r, map[string]string{"message": "user not found"})
+			return
+		}
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{"message": "internal server error"})
+		return
+	}
+
+	// get profile from user object
+	profile := user.Profile
+
+	render.JSON(w, r, profile)
 }
 
 func ListUserRoles(w http.ResponseWriter, r *http.Request) {
