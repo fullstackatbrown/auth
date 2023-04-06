@@ -2,11 +2,13 @@ openapi: "3.0.2"
 info:
   title: Auth API
   version: "1.0"
+
 servers:
   - url: http://localhost:8000/v1
     description: Local development server
   - url: https://auth.up.railway.app/v1
     description: Remote development server
+
 paths:
   /auth/google/login:
     get:
@@ -53,6 +55,7 @@ paths:
       responses:
         "200":
           description: OK
+
   /users:
     get:
       description: "List all users with the given email."
@@ -67,6 +70,12 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
   /users/{userId}:
     delete:
       description: "Delete a user"
@@ -82,7 +91,7 @@ paths:
           description: No Content
   /users/{userId}/profile:
     get:
-      description: ""
+      description: "Get a user's profile."
       tags: [users]
       parameters:
         - name: userId
@@ -93,8 +102,12 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
     patch:
-      description: ""
+      description: "Update a user's profile."
       tags: [users]
       parameters:
         - name: userId
@@ -107,20 +120,17 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                pronouns:
-                  type: string
+              $ref: "#/components/schemas/Profile"
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
   /users/{userId}/roles:
     get:
-      description: ""
+      description: "Get a user's roles."
       tags: [users]
       parameters:
         - name: userId
@@ -131,6 +141,12 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Role"
     post:
       description: ""
       tags: [users]
@@ -154,6 +170,10 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Role"
     delete:
       description: ""
       tags: [users]
@@ -176,8 +196,9 @@ paths:
           schema:
             type: string
       responses:
-        "200":
-          description: OK
+        "204":
+          description: No Content
+
   /assignments:
     get:
       description: "List all assignments for a given email."
@@ -192,6 +213,12 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Assignment"
     post:
       description: "Create an assignment."
       tags: [assignments]
@@ -201,24 +228,17 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                role:
-                  type: object
-                  properties:
-                    domain:
-                      type: string
-                    role:
-                      type: string
-
+              $ref: "#/components/schemas/Assignment"
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Assignment"
   /assignments/{assignmentId}:
     patch:
-      description: "Update an assignment by ID."
+      description: "Update an assignment."
       tags: [assignments]
       parameters:
         - name: assignmentId
@@ -231,20 +251,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                role:
-                  type: object
-                  properties:
-                    domain:
-                      type: string
-                    role:
-                      type: string
+              $ref: "#/components/schemas/Assignment"
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Assignment"
     delete:
       description: "Delete an assignment by ID."
       tags: [assignments]
@@ -255,8 +269,9 @@ paths:
           schema:
             type: string
       responses:
-        "200":
-          description: OK
+        "204":
+          description: No Content
+
   /domains:
     get:
       description: ""
@@ -352,3 +367,71 @@ paths:
       responses:
         "200":
           description: OK
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - googleId
+        - profile
+        - roles
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        googleId:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        profile:
+          $ref: "#/components/schemas/Profile"
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Role"
+    Profile:
+      type: object
+      required:
+        - name
+        - email
+        - pronouns
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: johndoe@example.com
+        pronouns:
+          type: string
+          example: he/him
+    Role:
+      type: object
+      required:
+        - domain
+        - role
+      properties:
+        domain:
+          type: string
+          example: cs200
+        role:
+          type: string
+          example: uta
+    Assignment:
+      type: object
+      required:
+        - email
+        - role
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        email:
+          type: string
+          example: johndoe@example.com
+        role:
+          $ref: "#/components/schemas/Role"
