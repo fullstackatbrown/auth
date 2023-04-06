@@ -133,17 +133,25 @@ func AddUserRole(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// get role from body
-	var role model.Role
-	err = render.DecodeJSON(r.Body, &role)
+	// get newRole from body
+	var newRole model.Role
+	err = render.DecodeJSON(r.Body, &newRole)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, map[string]string{"message": "invalid request body"})
 		return
 	}
 
+	// check that user doesn't already have role
+	for _, role := range user.Roles {
+		if role.Domain == newRole.Domain && role.Role == newRole.Role {
+			render.Status(r, http.StatusOK)
+			return
+		}
+	}
+
 	// add role to user object
-	user.Roles = append(user.Roles, role)
+	user.Roles = append(user.Roles, newRole)
 
 	// persist update to db
 	err = db.Update(user, false)
