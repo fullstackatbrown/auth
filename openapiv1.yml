@@ -192,58 +192,34 @@ paths:
       responses:
         "200":
           description: OK
-  /assignments/{assignmentId}:
-    get:
-      description: ""
-      tags: [assignments]
-      parameters:
-        - name: assignmentId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-    patch:
-      description: ""
-      tags: [assignments]
-      parameters:
-        - name: assignmentId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-    delete:
-      description: ""
-      tags: [assignments]
-      parameters:
-        - name: assignmentId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-  /assignments/{assignmentId}/roles:
-    get:
-      description: ""
-      tags: [assignments]
-      parameters:
-        - name: assignmentId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
     post:
-      description: ""
+      description: "Create an assignment."
+      tags: [assignments]
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                roles:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      domain:
+                        type: string
+                      role:
+                        type: string
+      responses:
+        "200":
+          description: OK
+  /assignments/{assignmentId}:
+    patch:
+      description: "Update an assignment by ID."
       tags: [assignments]
       parameters:
         - name: assignmentId
@@ -251,11 +227,29 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                roles:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      domain:
+                        type: string
+                      role:
+                        type: string
       responses:
         "200":
           description: OK
     delete:
-      description: ""
+      description: "Delete an assignment by ID."
       tags: [assignments]
       parameters:
         - name: assignmentId
