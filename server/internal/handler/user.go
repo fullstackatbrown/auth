@@ -37,6 +37,37 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
+	// get user id from path param
+	userId := chi.URLParam(r, "userId")
+
+	// get user object from db
+	user, err := db.FindUserById(userId)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			render.Status(r, http.StatusNotFound)
+			render.JSON(w, r, map[string]string{"message": "user not found"})
+			return
+		}
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{"message": "internal server error"})
+		return
+	}
+
+	// get updated user object from request body
+	err = render.DecodeJSON(r.Body, &user.Profile)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, map[string]string{"message": "invalid request body"})
+		return
+	}
+
+	// persist update to db
+	err = db.Update(user, false)
+	if err != nil {
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{"message": "internal server error"})
+		return
+	}
 }
 
 func GetUserProfile(w http.ResponseWriter, r *http.Request) {
@@ -95,7 +126,7 @@ func AddUserRole(w http.ResponseWriter, r *http.Request) {
 	user.Roles = append(user.Roles, role)
 
 	// persist update to db
-	err = db.Update(user, true)
+	err = db.Update(user, false)
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, map[string]string{"message": "internal server error"})
