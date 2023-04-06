@@ -155,4 +155,41 @@ func AddUserRole(w http.ResponseWriter, r *http.Request) {
 }
 
 func RemoveUserRole(w http.ResponseWriter, r *http.Request) {
+	// get user id from path param
+	userId := chi.URLParam(r, "userId")
+
+	// get user object from db
+	user, err := db.FindUserById(userId)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			render.Status(r, http.StatusNotFound)
+			render.JSON(w, r, map[string]string{"message": "user not found"})
+			return
+		}
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{"message": "internal server error"})
+		return
+	}
+
+	// get domain and role from query params
+	domain := r.URL.Query().Get("domain")
+	role := r.URL.Query().Get("role")
+
+	// remove corresponding role from user object
+	for i, r := range user.Roles {
+		if r.Domain == domain && r.Role == role {
+			user.Roles = append(user.Roles[:i], user.Roles[i+1:]...)
+			break
+		}
+	}
+
+	// persist update to db
+	err = db.Update(user, false)
+	if err != nil {
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{"message": "internal server error"})
+		return
+	}
+
+	render.Status(r, http.StatusNoContent)
 }
