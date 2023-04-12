@@ -150,8 +150,17 @@ func AddUserRole(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// add role to user object
-	user.Roles = append(user.Roles, newRole)
+	// add role to user object if there isn't one already
+	add := true
+	for _, role := range user.Roles {
+		if role.Domain == newRole.Domain && role.Role == newRole.Role {
+			add = false
+			break
+		}
+	}
+	if add {
+		user.Roles = append(user.Roles, newRole)
+	}
 
 	// persist update to db
 	err = db.Update(user, false)
