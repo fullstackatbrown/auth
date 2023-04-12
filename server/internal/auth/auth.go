@@ -65,12 +65,23 @@ func addGoogleProvider() {
 		},
 		InfoURL: "https://www.googleapis.com/oauth2/v3/userinfo",
 		MapUserFn: func(data provider.UserData, _ []byte) token.User {
+			id := token.HashID(sha1.New(), data.Value("sub"))
 			userInfo := token.User{
-				ID:      token.HashID(sha1.New(), data.Value("sub")),
+				ID:      id,
 				Name:    data.Value("name"),
 				Email:   data.Value("email"),
 				Picture: data.Value("picture"),
 			}
+
+			// enrich user info with profile in db
+			dbUser, err := db.FindUserById(id)
+			if err == nil {
+				userInfo.Attributes = map[string]interface{}{
+					"profile": dbUser.Profile,
+					"roles":   dbUser.Roles,
+				}
+			}
+
 			// fail if email is not in AllowedEmailDomains
 			if len(config.Config.AllowedEmailDomains) > 0 {
 				for _, domain := range config.Config.AllowedEmailDomains {
