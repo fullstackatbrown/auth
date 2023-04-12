@@ -157,15 +157,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                domain:
-                  type: string
-                role:
-                  type: string
+              $ref: "#/components/schemas/Role"
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
     delete:
       description: ""
       tags: [users]
