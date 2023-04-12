@@ -17,6 +17,7 @@ func GetUsersByEmail(w http.ResponseWriter, r *http.Request) {
 	// handle error
 	users, _ := db.FindUsersByEmail(email)
 
+	render.Status(r, http.StatusOK)
 	render.JSON(w, r, users)
 }
 
@@ -68,6 +69,8 @@ func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 		render.JSON(w, r, map[string]string{"message": "internal server error"})
 		return
 	}
+
+	render.Status(r, http.StatusOK)
 }
 
 func GetUserProfile(w http.ResponseWriter, r *http.Request) {
@@ -90,6 +93,7 @@ func GetUserProfile(w http.ResponseWriter, r *http.Request) {
 	// get profile from user object
 	profile := user.Profile
 
+	render.Status(r, http.StatusOK)
 	render.JSON(w, r, profile)
 }
 
@@ -113,6 +117,7 @@ func ListUserRoles(w http.ResponseWriter, r *http.Request) {
 	// get roles from user object
 	roles := user.Roles
 
+	render.Status(r, http.StatusOK)
 	render.JSON(w, r, roles)
 }
 
@@ -169,6 +174,8 @@ func AddUserRole(w http.ResponseWriter, r *http.Request) {
 		render.JSON(w, r, map[string]string{"message": "internal server error"})
 		return
 	}
+
+	render.Status(r, http.StatusCreated)
 }
 
 func RemoveUserRole(w http.ResponseWriter, r *http.Request) {
