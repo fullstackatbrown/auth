@@ -124,10 +124,6 @@ paths:
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Profile"
   /users/{userId}/roles:
     get:
       description: "Get a user's roles."
@@ -170,10 +166,6 @@ paths:
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Role"
     delete:
       description: ""
       tags: [users]
@@ -232,10 +224,6 @@ paths:
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Assignment"
   /assignments/{assignmentId}:
     patch:
       description: "Update an assignment."
@@ -255,10 +243,6 @@ paths:
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Assignment"
     delete:
       description: "Delete an assignment by ID."
       tags: [assignments]
@@ -273,32 +257,25 @@ paths:
           description: No Content
 
   /domains:
-    get:
-      description: ""
-      tags: [domains]
-      parameters:
-        - name: name
-          in: query
-          description: "The name of the domain to search for."
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
     post:
-      description: ""
+      description: "Create a domain."
       tags: [domains]
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Domain"
       responses:
         "200":
           description: OK
-  /domains/{domainId}:
+  /domains/{domainName}:
     get:
-      description: ""
+      description: "Get a domain by name."
       tags: [domains]
       parameters:
-        - name: domainId
+        - name: domainName
           in: path
           required: true
           schema:
@@ -306,23 +283,15 @@ paths:
       responses:
         "200":
           description: OK
-    patch:
-      description: ""
-      tags: [domains]
-      parameters:
-        - name: domainId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Domain"
     delete:
-      description: ""
+      description: "Delete a domain by name."
       tags: [domains]
       parameters:
-        - name: domainId
+        - name: domainName
           in: path
           required: true
           schema:
@@ -330,21 +299,27 @@ paths:
       responses:
         "200":
           description: OK
-  /domains/{domainId}/roles:
-    get:
-      description: ""
-      tags: [domains]
-      parameters:
-        - name: domainId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
+  /domains/{domainName}/roles:
     post:
-      description: ""
+      description: "Add a role to a domain."
+      tags: [domains]
+      parameters:
+        - name: domainName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Role"
+      responses:
+        "200":
+          description: OK
+    delete:
+      description: "Delete a role from a domain."
       tags: [domains]
       parameters:
         - name: domainId
@@ -352,15 +327,8 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        "200":
-          description: OK
-    delete:
-      description: ""
-      tags: [domains]
-      parameters:
-        - name: domainId
-          in: path
+        - name: role
+          in: query
           required: true
           schema:
             type: string
@@ -435,3 +403,16 @@ components:
           example: johndoe@example.com
         role:
           $ref: "#/components/schemas/Role"
+    Domain:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: cs200s23
+        roles:
+          type: array
+          items:
+            type: string
+            example: uta
