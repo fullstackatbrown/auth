@@ -13,7 +13,7 @@ import (
 func CreateAssignment(w http.ResponseWriter, r *http.Request) {
 	// decode the request body into a new Assignment
 	newAssignment := &model.Assignment{}
-	err := render.DecodeJSON(r.Body, &newAssignment)
+	err := render.DecodeJSON(r.Body, newAssignment)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, map[string]string{"message": "invalid request body"})
