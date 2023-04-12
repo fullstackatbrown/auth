@@ -317,7 +317,7 @@ paths:
       description: "Delete a role from a domain."
       tags: [domains]
       parameters:
-        - name: domainId
+        - name: domainName
           in: path
           required: true
           schema:
