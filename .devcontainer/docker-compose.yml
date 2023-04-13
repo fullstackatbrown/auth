@@ -14,7 +14,7 @@ services:
       - "8000:8000"
       - "3000:3000"
     environment:
-      PORT: "8000"
+      SERVER_PORT: "8000"
       MONGO_URI: "mongodb://db:27017/"
       DB_NAME: "auth"
       AUTH_ROOT_URL: "http://localhost:8000"

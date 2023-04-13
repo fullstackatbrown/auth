@@ -59,7 +59,7 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		IsHTTPS:                 false,
 		SessionCookieName:       "fsab-session",
 		SessionCookieExpiration: time.Hour * 24 * 14,
-		Port:                    os.Getenv("PORT"),
+		Port:                    os.Getenv("SERVER_PORT"),
 		OAuth2:                  oauth,
 		MongoUri:                os.Getenv("MONGO_URI"),
 		DbName:                  os.Getenv("DB_NAME"),
