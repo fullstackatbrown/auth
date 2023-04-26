@@ -1,6 +1,6 @@
 {
   "name": "brown-auth-kit",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A client utility library for using the FullStackAtBrown authentication system",
   "main": "./dist/index.js",
   "files": [
@@ -15,11 +15,14 @@
   "repository": "https://github.com/fullstackatbrown/auth-infrastructure",
   "bugs": "https://github.com/fullstackatbrown/auth-infrastructure/issues",
   "devDependencies": {
+    "@types/react": "^18.2.0",
     "typescript": "^5.0.3"
   },
   "dependencies": {
-    "@types/jwt-decode": "^3.1.0",
     "axios": "^1.3.5",
     "jwt-decode": "^3.1.2"
+  },
+  "optionalDependencies": {
+    "react": "^18.2.0"
   }
 }
