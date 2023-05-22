@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -38,7 +39,7 @@ type ServerConfig struct {
 	CookieDomain string
 }
 
-func DefaultDevelopmentConfig() *ServerConfig {
+func init() {
 	godotenv.Load()
 
 	oauth := &oauth2.Config{
@@ -48,16 +49,11 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		Endpoint:     google.Endpoint,
 	}
 
-	return &ServerConfig{
-		AllowedOrigins: []string{
-			"*",
-			// "localhost:3000",
-			// "localhost:8080",
-			// "https://here-backend.up.railway.app",
-		}, // TODO: env var and prune unused
-		AllowedEmailDomains:     []string{"@brown.edu"},
-		IsHTTPS:                 false,
-		SessionCookieName:       "fsab-session",
+	Config = &ServerConfig{
+		AllowedOrigins:          strings.Split(os.Getenv("ALLOWED_ORIGINS"), ","),
+		AllowedEmailDomains:     strings.Split(os.Getenv("ALLOWED_EMAIL_DOMAINS"), ","),
+		IsHTTPS:                 os.Getenv("IS_HTTPS") == "true",
+		SessionCookieName:       os.Getenv("COOKIE_NAME"),
 		SessionCookieExpiration: time.Hour * 24 * 14,
 		Port:                    os.Getenv("SERVER_PORT"),
 		OAuth2:                  oauth,
@@ -66,8 +62,4 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		RootUrl:                 os.Getenv("AUTH_ROOT_URL"),
 		CookieDomain:            os.Getenv("COOKIE_DOMAIN"),
 	}
-}
-
-func init() {
-	Config = DefaultDevelopmentConfig()
 }

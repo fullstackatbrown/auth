@@ -19,6 +19,10 @@ services:
       DB_NAME: "auth"
       AUTH_ROOT_URL: "http://localhost:8000"
       COOKIE_DOMAIN: "localhost"
+      ALLOWED_ORIGINS: "localhost:3000"
+      ALLOWED_EMAIL_DOMAINS: "@brown.edu,@gmail.com"
+      IS_HTTPS: "true"
+      COOKIE_NAME: "fsab-session"
       LOGIN_DESTINATION: "http://localhost:8000/v1/auth/google/login"
       DASHBOARD_HOME: "http://localhost:3000/home"
     volumes:
