@@ -10,6 +10,7 @@ import (
 	"github.com/fullstackatbrown/auth-infrastructure/internal/model"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
+	"github.com/go-pkgz/auth/logger"
 	"github.com/go-pkgz/auth/middleware"
 	"github.com/go-pkgz/auth/provider"
 	"github.com/go-pkgz/auth/token"
@@ -48,6 +49,7 @@ func defaultOpts() auth.Opts {
 			}
 			return claims
 		}),
+		Logger: logger.Std,
 	}
 	return opts
 }
