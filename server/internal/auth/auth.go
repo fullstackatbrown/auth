@@ -25,6 +25,7 @@ func defaultOpts() auth.Opts {
 		SecretReader: token.SecretFunc(func(id string) (string, error) { // secret key for JWT
 			return "secret", nil
 		}),
+		SecureCookies:   true,
 		TokenDuration:   time.Hour * 24 * 14, // token expires in 14 days
 		CookieDuration:  time.Hour * 24 * 14, // cookie expires in 14 days
 		Issuer:          "fsab-auth",
