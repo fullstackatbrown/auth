@@ -19,6 +19,8 @@ services:
       DB_NAME: "auth"
       AUTH_ROOT_URL: "http://localhost:8000"
       COOKIE_DOMAIN: "localhost"
+      LOGIN_DESTINATION: "http://localhost:8000/v1/auth/google/login"
+      DASHBOARD_HOME: "http://localhost:3000/home"
     volumes:
       - ..:/workspaces/auth:cached
 
