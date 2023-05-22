@@ -3,7 +3,6 @@ package auth
 import (
 	"crypto/sha1"
 	"strings"
-	"time"
 
 	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
 	"github.com/fullstackatbrown/auth-infrastructure/internal/db"
@@ -26,10 +25,11 @@ func defaultOpts() auth.Opts {
 			return "secret", nil
 		}),
 		SecureCookies:   true,
-		TokenDuration:   time.Hour * 24 * 14, // token expires in 14 days
-		CookieDuration:  time.Hour * 24 * 14, // cookie expires in 14 days
+		TokenDuration:   config.Config.CookieExpiration, // token expires in 14 days
+		CookieDuration:  config.Config.CookieExpiration, // cookie expires in 14 days
 		Issuer:          "fsab-auth",
-		DisableXSRF:     true,
+		DisableXSRF:     true, // TODO: ENABLE
+		JWTCookieName:   config.Config.CookieName,
 		JWTCookieDomain: config.Config.CookieDomain,
 		URL:             config.Config.RootUrl,
 		AvatarStore:     avatar.NewLocalFS("/tmp"),
