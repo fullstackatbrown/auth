@@ -1,13 +1,15 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import LoginButton from '@/components/LoginButton'
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
+        {/* <p>
           <a href={`/login?from=${process.env.DASHBOARD_HOME}`}>Login</a>
-        </p>
+        </p> */}
+        <LoginButton login={process.env.LOGIN_DESTINATION || ""} home={process.env.DASHBOARD_HOME || ""} />
         <div>
           <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
