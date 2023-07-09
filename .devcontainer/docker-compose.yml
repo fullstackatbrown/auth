@@ -23,7 +23,7 @@ services:
       ALLOWED_EMAIL_DOMAINS: "@brown.edu,@gmail.com"
       IS_HTTPS: "false"
       COOKIE_NAME: "fsab-session"
-      DASHBOARD_HOME: "http://localhost:3000/home"
+      DASHBOARD_HOME: "http://localhost:3000/overview"
     volumes:
       - ..:/workspaces/auth:cached
 
