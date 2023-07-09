@@ -15,8 +15,8 @@ function getCookie(name: string): string | undefined {
   }
 }
 
-function getUserIdFromToken(): string {
-  const token = getCookie("token");
+function getUserIdFromToken(tokenName: string): string {
+  const token = getCookie(tokenName);
   if (token === undefined) {
     throw Error("No token found");
   }
@@ -42,7 +42,7 @@ export function getUserById(id: string): Promise<User> {
  */
 export function getCurrentUser(): Promise<User> {
   try {
-    const id = getUserIdFromToken();
+    const id = getUserIdFromToken("fsab-session");
     return getUserById(id);
   } catch (e) {
     return Promise.reject(e);
@@ -52,14 +52,14 @@ export function getCurrentUser(): Promise<User> {
 /**
  * Redirects the user to a Google sign in page, then creates a session with the SMU API.
  */
-export function logIn(): Promise<void> {
-  return client.post("/auth/google/login");
+export function signIn(authBaseHost: string, applicationHome: string): void {
+  location.href = `${authBaseHost}/login?from=${applicationHome}`
 }
 
 /**
  * Signs out the current user by removing the session cookie.
  */
-export function logOut(): Promise<void> {
+export function signOut(): Promise<void> {
   return client.post("/auth/logout");
 }
 
