@@ -18,11 +18,11 @@ You need golang and nodejs installed to run the backend and frontend locally. Yo
 
 ### Backend
 
-To start the backend, run `make backend` in the root. The bakcend will be listening on port 8000 of localhost. 
+To start the backend, run `make backend`. The bakcend will be listening on port 8000 of localhost. 
 
 ### Dashboard
 
-To start the dashboard, run `make dashboard` in the root. The dashboard will be listening on port 3000 of localhost.
+To start the dashboard, run `make frontend`. The dashboard will be listening on port 3000 of localhost.
 
 ## API Documentation
 
