@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -20,10 +21,10 @@ type ServerConfig struct {
 	AllowedEmailDomains []string
 	// IsHTTPS should be set to true for production.
 	IsHTTPS bool
-	// SessionCookieName is the name to use for the session cookie.
-	SessionCookieName string
-	// SessionCookieExpiration is the amount of time a session cookie is valid. Max 5 days.
-	SessionCookieExpiration time.Duration
+	// CookieName is the name to use for the session cookie.
+	CookieName string
+	// CookieExpiration is the amount of time a session cookie is valid. Max 5 days.
+	CookieExpiration time.Duration
 	// Port is the port the server should run on.
 	Port string
 	// Google OAuth2 config
@@ -38,7 +39,7 @@ type ServerConfig struct {
 	CookieDomain string
 }
 
-func DefaultDevelopmentConfig() *ServerConfig {
+func init() {
 	godotenv.Load()
 
 	oauth := &oauth2.Config{
@@ -48,21 +49,17 @@ func DefaultDevelopmentConfig() *ServerConfig {
 		Endpoint:     google.Endpoint,
 	}
 
-	return &ServerConfig{
-		AllowedOrigins:          []string{"localhost:3000", "localhost:8080", "https://here-backend.up.railway.app"}, // TODO: env var and prune unused
-		AllowedEmailDomains:     []string{"@brown.edu"},
-		IsHTTPS:                 false,
-		SessionCookieName:       "fsab-session",
-		SessionCookieExpiration: time.Hour * 24 * 14,
-		Port:                    os.Getenv("PORT"),
-		OAuth2:                  oauth,
-		MongoUri:                os.Getenv("MONGO_URI"),
-		DbName:                  os.Getenv("DB_NAME"),
-		RootUrl:                 os.Getenv("AUTH_ROOT_URL"),
-		CookieDomain:            os.Getenv("COOKIE_DOMAIN"),
+	Config = &ServerConfig{
+		AllowedOrigins:      strings.Split(os.Getenv("ALLOWED_ORIGINS"), ","),
+		AllowedEmailDomains: strings.Split(os.Getenv("ALLOWED_EMAIL_DOMAINS"), ","),
+		IsHTTPS:             os.Getenv("IS_HTTPS") == "true",
+		CookieName:          os.Getenv("COOKIE_NAME"),
+		CookieExpiration:    time.Hour * 24 * 14,
+		Port:                os.Getenv("SERVER_PORT"),
+		OAuth2:              oauth,
+		MongoUri:            os.Getenv("MONGO_URI"),
+		DbName:              os.Getenv("DB_NAME"),
+		RootUrl:             os.Getenv("AUTH_ROOT_URL"),
+		CookieDomain:        os.Getenv("COOKIE_DOMAIN"),
 	}
-}
-
-func init() {
-	Config = DefaultDevelopmentConfig()
 }

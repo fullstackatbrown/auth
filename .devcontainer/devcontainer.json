@@ -30,9 +30,9 @@
             "extensions": [
                 "ms-vscode.go",
                 "dbaeumer.vscode-eslint",
-                "rangav.vscode-thunder-client",
                 "mongodb.mongodb-vscode",
-                "42Crunch.vscode-openapi"
+                "42Crunch.vscode-openapi",
+                "redhat.vscode-yaml"
             ]
         }
     }

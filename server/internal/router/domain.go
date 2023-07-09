@@ -8,8 +8,10 @@ import (
 func DomainRoutes() *chi.Mux {
 	router := chi.NewRouter()
 
+	// TODO: Require super admin
 	router.Post("/", handler.CreateDomain)
-	router.Route("/{domain}", func(r chi.Router) {
+
+	router.Route("/{domainName}", func(r chi.Router) {
 		r.Get("/", handler.GetDomain)
 
 		// TODO: Require super admin
@@ -23,8 +25,6 @@ func DomainRoutes() *chi.Mux {
 
 func domainRolesRoutes() *chi.Mux {
 	router := chi.NewRouter()
-
-	router.Get("/", handler.ListDomainRoles)
 
 	// TODO: Require super admin
 	router.Post("/", handler.CreateDomainRole)

@@ -9,12 +9,11 @@ func AssignmentRoutes() *chi.Mux {
 	router := chi.NewRouter()
 
 	router.Post("/", handler.CreateAssignment)
-	router.Get("/", handler.ListAssignments)
-	router.Route("/{assignmentId}", func(r chi.Router) {
-		r.Get("/", handler.GetAssignment)
+	router.Get("/", handler.GetAssignmentsByEmail)
 
-		r.Delete("/", handler.RemoveAssignment)
+	router.Route("/{assignmentId}", func(r chi.Router) {
 		r.Patch("/", handler.UpdateAssignment)
+		r.Delete("/", handler.RemoveAssignment)
 	})
 
 	return router

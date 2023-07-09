@@ -7,7 +7,7 @@ type User struct {
 	mgm.DefaultModel `bson:",inline"`
 	GoogleId         string  `json:"googleId" bson:"googleId"`
 	Profile          Profile `json:"profile" bson:"profile"`
-	Roles            Roles   `json:"roles" bson:"roles"`
+	Roles            []Role  `json:"roles" bson:"roles"`
 }
 
 type Profile struct {

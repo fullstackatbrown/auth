@@ -3,29 +3,33 @@ package auth
 import (
 	"crypto/sha1"
 	"strings"
-	"time"
 
 	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
 	"github.com/fullstackatbrown/auth-infrastructure/internal/db"
 	"github.com/fullstackatbrown/auth-infrastructure/internal/model"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
+	"github.com/go-pkgz/auth/logger"
+	"github.com/go-pkgz/auth/middleware"
 	"github.com/go-pkgz/auth/provider"
 	"github.com/go-pkgz/auth/token"
 	"golang.org/x/oauth2"
 )
 
 var Service *auth.Service
+var Middleware middleware.Authenticator
 
 func defaultOpts() auth.Opts {
 	opts := auth.Opts{
 		SecretReader: token.SecretFunc(func(id string) (string, error) { // secret key for JWT
 			return "secret", nil
 		}),
-		TokenDuration:   time.Hour * 24 * 14, // token expires in 14 days
-		CookieDuration:  time.Hour * 24 * 14, // cookie expires in 14 days
+		SecureCookies:   true,
+		TokenDuration:   config.Config.CookieExpiration, // token expires in 14 days
+		CookieDuration:  config.Config.CookieExpiration, // cookie expires in 14 days
 		Issuer:          "fsab-auth",
-		DisableXSRF:     true,
+		DisableXSRF:     true, // TODO: ENABLE
+		JWTCookieName:   config.Config.CookieName,
 		JWTCookieDomain: config.Config.CookieDomain,
 		URL:             config.Config.RootUrl,
 		AvatarStore:     avatar.NewLocalFS("/tmp"),
@@ -46,6 +50,7 @@ func defaultOpts() auth.Opts {
 			}
 			return claims
 		}),
+		Logger: logger.Std,
 	}
 	return opts
 }
@@ -63,12 +68,23 @@ func addGoogleProvider() {
 		},
 		InfoURL: "https://www.googleapis.com/oauth2/v3/userinfo",
 		MapUserFn: func(data provider.UserData, _ []byte) token.User {
+			id := token.HashID(sha1.New(), data.Value("sub"))
 			userInfo := token.User{
-				ID:      token.HashID(sha1.New(), data.Value("sub")),
+				ID:      id,
 				Name:    data.Value("name"),
 				Email:   data.Value("email"),
 				Picture: data.Value("picture"),
 			}
+
+			// enrich user info with profile in db
+			dbUser, err := db.FindUserById(id)
+			if err == nil {
+				userInfo.Attributes = map[string]interface{}{
+					"profile": dbUser.Profile,
+					"roles":   dbUser.Roles,
+				}
+			}
+
 			// fail if email is not in AllowedEmailDomains
 			if len(config.Config.AllowedEmailDomains) > 0 {
 				for _, domain := range config.Config.AllowedEmailDomains {
@@ -87,6 +103,7 @@ func addGoogleProvider() {
 func init() {
 	opts := defaultOpts()
 	Service = auth.NewService(opts)
+	Middleware = Service.Middleware()
 
 	addGoogleProvider()
 }
@@ -94,5 +111,5 @@ func init() {
 func userLoginHandler(user *token.User) {
 	// TODO attach assignments to user
 	dbUser := model.NewUser(user.ID, user.Name, user.Email)
-	db.UpsertUser(dbUser)
+	db.Update(dbUser, true)
 }

@@ -1,27 +1,29 @@
 # Auth
 
-## Local Development Guide
+## Development Environment
 
-A `.env` secret file is needed to run the backend server. No need for the `.env` file if you're using Codespaces. Request a copy of this file through our slack channel.
+### Codespaces
 
-To start the backend server, make sure you are in the `server` folder by running `cd server` from the project root, then run `make run` to start the backend server.
+This project is configured to run in GitHub Codespaces. To start developing, create a codespace for this [project](https://github.com/fullstackatbrown/auth) if you haven't already, and open that codespace in your editor of choice. All secrets are already configured.
 
-To start the frontend client, make sure you are in the `client` folder by running `cd client` from the project root, then run `npm install` to install necessary packages, and run `npm start` to start the frontend.
+### Devcontainer
 
-## Backend API
+To develop in a local devcontainer, you need to have [Docker](https://www.docker.com/) installed. Then, open the project in VSCode, and click the green button in the bottom left corner to open the project in a devcontainer. You will need to add a secret `.env` file. Ask in slack for the secrets.
 
-### Users
+### Local
 
-| Description         | Route                                     | Body                                 | Auth  |
-|---------------------|-------------------------------------------|--------------------------------------|-------|
-| Cretae user         | `POST /users`                             | `name`, Optional: `pronouns`         | Admin |
-| Get user by id      | `GET /users/{userId}`                     |                                      | Admin |
-| Delete user by id   | `DELETE /users/{userId}`                  |                                      | Admin |
+You need golang and nodejs installed to run the backend and frontend locally. You will need a secret `.env` file. Ask in slack for the secrets.
 
-### Roles
+## Starting Development
 
-| Description         | Route                                     | Body                                 | Auth  |
-|---------------------|-------------------------------------------|--------------------------------------|-------|
-| Assign role         | `POST /users/{userId}/roles`              | `role`                               | Admin |
-| Unassign role       | `DELETE /users/{userId}/roles/{roleId}`   |                                      | Admin |
-| List roles          | `GET /users/{userId}/roles`               |                                      | Admin |
+### Backend
+
+To start the backend, run `make backend` in the root. The bakcend will be listening on port 8000 of localhost. 
+
+### Dashboard
+
+To start the dashboard, run `make dashboard` in the root. The dashboard will be listening on port 3000 of localhost.
+
+## API Documentation
+
+The API documentation for the backend is available at [SwaggerHub](https://app.swaggerhub.com/apis-docs/tianrendong/Auth/1.0).

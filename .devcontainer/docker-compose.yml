@@ -14,11 +14,17 @@ services:
       - "8000:8000"
       - "3000:3000"
     environment:
-      PORT: "8000"
+      SERVER_PORT: "8000"
       MONGO_URI: "mongodb://db:27017/"
       DB_NAME: "auth"
       AUTH_ROOT_URL: "http://localhost:8000"
       COOKIE_DOMAIN: "localhost"
+      ALLOWED_ORIGINS: "localhost:3000"
+      ALLOWED_EMAIL_DOMAINS: "@brown.edu,@gmail.com"
+      IS_HTTPS: "false"
+      COOKIE_NAME: "fsab-session"
+      LOGIN_DESTINATION: "http://localhost:8000/v1/auth/google/login"
+      DASHBOARD_HOME: "http://localhost:3000/home"
     volumes:
       - ..:/workspaces/auth:cached
 
