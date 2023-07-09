@@ -1,5 +1,5 @@
 backend:
-	cd server && go run main.go
+	cd server ; go run main.go
 
-dashboard:
-	cd client && npm i && npm start
+frontend:
+	cd dashboard ; npm i && npm run dev
