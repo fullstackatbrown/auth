@@ -1,18 +1,20 @@
 'use client'
 
+import { login } from "@/utils/auth"
+
 interface LoginButtonProps {
-    login: string,
-    home: string,
+  authHost: string,
+  appHost: string,
 }
 
-export default function LoginButton({login, home}: LoginButtonProps) {
-    function redirectToLogin() {
-        location.href = `${login}?from=${home}`
-      }    
+export default function LoginButton({ authHost, appHost }: LoginButtonProps) {
+  function redirectToLogin() {
+    login(authHost, appHost);
+  }
 
-    return (
-        <p onClick={redirectToLogin} style={{cursor: "pointer"}}>
-          Login
-        </p>
-    )
+  return (
+    <p onClick={redirectToLogin} style={{ cursor: "pointer" }}>
+      Login
+    </p>
+  )
 }
