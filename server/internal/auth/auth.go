@@ -2,6 +2,7 @@ package auth
 
 import (
 	"crypto/sha1"
+	"net/http"
 	"strings"
 
 	"github.com/fullstackatbrown/auth-infrastructure/internal/config"
@@ -24,7 +25,7 @@ func defaultOpts() auth.Opts {
 		SecretReader: token.SecretFunc(func(id string) (string, error) { // secret key for JWT
 			return "secret", nil
 		}),
-		SecureCookies:   true,
+		SameSiteCookie:  http.SameSiteLaxMode,
 		TokenDuration:   config.Config.CookieExpiration, // token expires in 14 days
 		CookieDuration:  config.Config.CookieExpiration, // cookie expires in 14 days
 		Issuer:          "fsab-auth",
