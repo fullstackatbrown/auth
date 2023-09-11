@@ -19,8 +19,6 @@ type ServerConfig struct {
 	// AllowedEmailDomains is a list of email domains that the server will allow account registrations from. If empty,
 	// all domains will be allowed.
 	AllowedEmailDomains []string
-	// IsHTTPS should be set to true for production.
-	IsHTTPS bool
 	// CookieName is the name to use for the session cookie.
 	CookieName string
 	// CookieExpiration is the amount of time a session cookie is valid. Max 5 days.
@@ -52,7 +50,6 @@ func init() {
 	Config = &ServerConfig{
 		AllowedOrigins:      strings.Split(os.Getenv("ALLOWED_ORIGINS"), ","),
 		AllowedEmailDomains: strings.Split(os.Getenv("ALLOWED_EMAIL_DOMAINS"), ","),
-		IsHTTPS:             os.Getenv("IS_HTTPS") == "true",
 		CookieName:          os.Getenv("COOKIE_NAME"),
 		CookieExpiration:    time.Hour * 24 * 14,
 		Port:                os.Getenv("SERVER_PORT"),
