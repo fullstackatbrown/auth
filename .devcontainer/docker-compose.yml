@@ -19,7 +19,7 @@ services:
       DB_NAME: "auth"
       AUTH_ROOT_URL: "http://localhost:8000"
       COOKIE_DOMAIN: "localhost"
-      ALLOWED_ORIGINS: "http://localhost:3000"
+      ALLOWED_ORIGINS: "http://localhost:3000,http://127.0.0.1:3000"
       ALLOWED_EMAIL_DOMAINS: "@brown.edu,@gmail.com"
       COOKIE_NAME: "fsab-session"
       DASHBOARD_HOME: "http://localhost:3000/overview"
